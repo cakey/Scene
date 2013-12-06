@@ -34,7 +34,7 @@ displayPoint = (point) ->
     console.log point
     window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
     window.map.setZoom(point.zoom)
-    document.getElementById("desc").innerHTML = point.name + " : " + point.description
+    $("#desc").text(point.name + " : " + point.description)
 
 playStory = () ->
     console.log "playing story"
@@ -45,8 +45,7 @@ playStory = () ->
     for point, i in story
         createTimeout(point, i)
    
-
-document.getElementById("play").addEventListener "click", playStory
+$("#play").click playStory
 
 init = () ->
     console.log "init" 
@@ -57,4 +56,4 @@ init = () ->
     window.map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions)
     setMapSize()
-google.maps.event.addDomListener(window, 'load', init);
+$(init)
