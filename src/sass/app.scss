@@ -1,4 +1,19 @@
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
 #map-canvas {
-	height: 500px;
-	width: 500px;
+	height: 550px;
+	width: 1000px;
+}
+
+#info-overlay {
+	position: absolute;
+	top: 0;
+	left: 75%;
+	height: 100%;
+	width: 400px;
+	background: rgba(0,0,0,0.5);
+
 }

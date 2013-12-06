@@ -1,9 +1,60 @@
-init = () ->
-  console.log "init" 
-  mapOptions =
-    center: new google.maps.LatLng(-34.397, 150.644),
-    zoom: 8
+story = [
+    latlng: [51.408411,-0.15022]
+    zoom: 9
+    name: "London"
+    description: "Born and raised."
+,
+    latlng: [52.204,0.118902]
+    zoom: 14
+    name: "Cambridge"
+    description: "The University Years"
+,
+    latlng: [37.735863,-122.414019]
+    zoom: 11
+    name: "SF"
+    description: "Venturing into the wild!"
+,
+    latlng: [37.744975,-122.419062]
+    zoom: 17
+    name: "Bernal Mission"
+    description: "I find my home!"
+]
 
-  map = new google.maps.Map(document.getElementById("map-canvas"),
+setMapSize = () ->
+    $("#map-canvas").height ($(window).height() + "px")
+    width = (($(window).width() - 400) + "px")
+    $("#map-canvas").width width
+    google.maps.event.trigger(window.map, 'resize')
+
+    $("#info-overlay").css("left", width)
+
+$(window).resize setMapSize
+
+displayPoint = (point) ->
+    console.log point
+    window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
+    window.map.setZoom(point.zoom)
+    document.getElementById("desc").innerHTML = point.name + " : " + point.description
+
+playStory = () ->
+    console.log "playing story"
+    createTimeout = (point, i) ->
+        setTimeout(() ->
+            displayPoint(point)
+        , (i+1)*1500) 
+    for point, i in story
+        createTimeout(point, i)
+   
+
+document.getElementById("play").addEventListener "click", playStory
+
+init = () ->
+    console.log "init" 
+    mapOptions =
+        center: new google.maps.LatLng(0.724944,-0.773394),
+        zoom: 1
+
+    window.map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions)
+    setMapSize()
 google.maps.event.addDomListener(window, 'load', init);
