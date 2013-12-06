@@ -1,6 +1,7 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	font-family: "Century Gothic", sans-serif;
 }
 
 #map-canvas {
@@ -11,9 +12,20 @@ body {
 #info-overlay {
 	position: absolute;
 	top: 0;
-	left: 75%;
 	height: 100%;
 	width: 400px;
 	background: rgba(0,0,0,0.5);
 
+	.point {
+		background: rgba(200,200,200,0.3);
+		padding: 5px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+		text-align: right;
+
+
+	}
+	.active {
+		background: rgba(250,200,250,0.3);
+	}
 }

@@ -1,15 +1,21 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>My AngularJS App</title>
+  <title>Scene</title>
   <link rel="stylesheet" href="css/app.css"/>
 </head>
-<body>
+<body ng-app="scene">
+  
   <div id="map-canvas"></div>
-  <div id="info-overlay">
+  <div id="info-overlay" ng-controller="FlowCtrl">
 	  <button id="play">Play</button>
 	  <span id="desc">Watch the story</span>
+	  <div ng-class="{active: active}" ng-click="active = !active" class="point" ng-repeat="point in story">
+		  <div> {{point.name}} </div>
+		  <div ng-show="active"> {{point.description}} </div>
+	  </div>
+
   </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6JBkMIUrJt45TPCMbdgkITL3JTCbywks&sensor=false">
     </script>

@@ -20,6 +20,12 @@ story = [
     description: "I find my home!"
 ]
 
+scene = angular.module "scene", []
+scene.controller 'FlowCtrl', ['$scope', ($scope) ->
+    $scope.state = "pause"
+    $scope.story = story
+    ]
+
 setMapSize = () ->
     $("#map-canvas").height ($(window).height() + "px")
     width = (($(window).width() - 400) + "px")
@@ -51,7 +57,7 @@ init = () ->
     console.log "init" 
     mapOptions =
         center: new google.maps.LatLng(0.724944,-0.773394),
-        zoom: 1
+        zoom: 2
 
     window.map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions)
