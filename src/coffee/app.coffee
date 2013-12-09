@@ -35,18 +35,26 @@ scene.controller 'FlowCtrl', ['$scope', ($scope) ->
     $scope.selected = -1
     $scope.playing = false
     $scope.story = story
+
     $scope.playStory = () ->
-        console.log "playing story"
-        createTimeout = (point, i) ->
+        $scope.playing = not $scope.playing
+
+        console.log "now playing = " + $scope.playing
+
+        createTimeout = (i) ->
             setTimeout(() ->
                 $scope.selected = i
-                displayPoint(point)
-                $scope.$apply()
-            , (i+1)*1500) 
-        for point, i in story
-            createTimeout(point, i)
+                displayPoint story[i]
+                if $scope.playing
+                    $scope.current = createTimeout($scope.selected + 1)
 
-        $scope.playing = not $scope.playing
+                $scope.$apply()
+            , 1500)
+
+        if $scope.playing
+            $scope.current = createTimeout($scope.selected + 1)
+        else
+            clearTimeout $scope.current
 
     $scope.displayPoint = (i) ->
         console.log $scope.selected
