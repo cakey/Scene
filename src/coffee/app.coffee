@@ -25,26 +25,34 @@ displayPoint = (point) ->
     window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
     window.map.setZoom(point.zoom)
 
-playStory = () ->
-    console.log "playing story"
-    createTimeout = (point, i) ->
-        setTimeout(() ->
-            displayPoint(point)
-        , (i+1)*1500) 
-    for point, i in story
-        createTimeout(point, i)
-
 scene = angular.module "scene", []
 scene.controller 'FlowCtrl', ['$scope', ($scope) ->
     $scope.selected = 0
-    $scope.state = "pause"
+    $scope.playing = false
     $scope.story = story
-    $scope.playStory = playStory
+    $scope.playStory = () ->
+        console.log "playing story"
+        createTimeout = (point, i) ->
+            setTimeout(() ->
+                $scope.selected = i
+                displayPoint(point)
+                $scope.$apply()
+            , (i+1)*1500) 
+        for point, i in story
+            createTimeout(point, i)
+
+        $scope.playing = not $scope.playing
+
     $scope.displayPoint = (i) ->
         console.log $scope.selected
         $scope.selected = i
         displayPoint story[i]
     ]
+
+scene.filter 'playButtonText', ->
+    (playing) ->
+        if playing then "pause" else "play"
+ 
 
 setMapSize = () ->
     $("#map-canvas").height ($(window).height() + "px")

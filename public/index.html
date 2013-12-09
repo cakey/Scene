@@ -9,9 +9,10 @@
   
   <div id="map-canvas"></div>
   <div id="info-overlay" ng-controller="FlowCtrl">
-	  <button id="play" ng-click="playStory()">{{state}}</button>
+	  <button id="play" ng-click="playStory()">{{playing|playButtonText}}</button>
 	  <span id="desc">Watch the story</span>
 	  <div ng-class="{active: selected == $index}" ng-click="displayPoint($index); console.log(selected);" class="point" ng-repeat="point in story">
+    
 		  <div> {{$index + 1}}: {{point.name}} </div>
 		  <div ng-show="selected == $index"> {{point.description}} </div>
 	  </div>
