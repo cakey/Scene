@@ -62,9 +62,9 @@ scene.controller 'FlowCtrl', ['$scope', ($scope) ->
         displayPoint story[i]
     ]
 
-scene.filter 'playButtonText', ->
+scene.filter 'playButtonImage', ->
     (playing) ->
-        if playing then "playing" else "paused"
+        if playing then "pause" else "play"
  
 
 setMapSize = () ->
