@@ -9,6 +9,11 @@ story = [
     name: "Cambridge"
     description: "The University Years"
 ,
+    latlng: [52.234259,0.153287]
+    zoom: 15
+    name: "Detour"
+    description: "Cheeky Gap Year..."
+,
     latlng: [37.735863,-122.414019]
     zoom: 11
     name: "SF"
@@ -27,7 +32,7 @@ displayPoint = (point) ->
 
 scene = angular.module "scene", []
 scene.controller 'FlowCtrl', ['$scope', ($scope) ->
-    $scope.selected = 0
+    $scope.selected = -1
     $scope.playing = false
     $scope.story = story
     $scope.playStory = () ->
@@ -51,7 +56,7 @@ scene.controller 'FlowCtrl', ['$scope', ($scope) ->
 
 scene.filter 'playButtonText', ->
     (playing) ->
-        if playing then "pause" else "play"
+        if playing then "playing" else "paused"
  
 
 setMapSize = () ->
