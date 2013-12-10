@@ -37,6 +37,9 @@ scene.controller 'FlowCtrl', ['$scope', ($scope) ->
     $scope.story = story
 
     $scope.playStory = () ->
+        if $scope.selected >= story.length-1
+            $scope.selected = -1
+
         $scope.playing = not $scope.playing
 
         console.log "now playing = " + $scope.playing
@@ -45,6 +48,10 @@ scene.controller 'FlowCtrl', ['$scope', ($scope) ->
             setTimeout(() ->
                 $scope.selected = i
                 displayPoint story[i]
+
+                if i >= story.length-1
+                    $scope.playing = false
+
                 if $scope.playing
                     $scope.current = createTimeout($scope.selected + 1)
 

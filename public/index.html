@@ -9,10 +9,11 @@
   
   <div id="map-canvas"></div>
   <div id="info-overlay" ng-controller="FlowCtrl">
-    <img src="img/glyphicons_{{playing|playButtonImage}}.png" ng-show="selected == -1" ng-click="playStory()">
+    <img ng-src="img/glyphicons_{{playing|playButtonImage}}.png" ng-show="selected == -1" ng-click="playStory()" />
 	  <span id="desc">Watch the story</span>
 	  <div ng-class="{active: selected == $index}" ng-click="displayPoint($index); console.log(selected);" class="point" ng-repeat="point in story">
-      <img src="img/glyphicons_{{playing|playButtonImage}}.png" ng-show="selected == $index" ng-click="playStory()">
+      <img ng-src="img/glyphicons_{{playing|playButtonImage}}.png" ng-show="(selected == $index) && !$last" ng-click="playStory()" />
+      <img ng-src="img/glyphicons_repeat.png" ng-show="(selected == $index) && $last" ng-click="playStory()" />
 
 		  <div> {{$index + 1}}: {{point.name}} </div>
 		  <div ng-show="selected == $index"> {{point.description}} </div>
