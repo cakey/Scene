@@ -1,40 +1,49 @@
-story = [
-    latlng: [51.408411,-0.15022]
-    zoom: 9
-    name: "London"
-    description: "Born and raised."
-,
-    latlng: [52.204,0.118902]
-    zoom: 14
-    name: "Cambridge"
-    description: "The University Years"
-,
-    latlng: [52.234259,0.153287]
-    zoom: 15
-    name: "Detour"
-    description: "Cheeky Gap Year..."
-,
-    latlng: [37.735863,-122.414019]
-    zoom: 11
-    name: "SF"
-    description: "Venturing into the wild!"
-,
-    latlng: [37.744975,-122.419062]
-    zoom: 17
-    name: "Bernal Mission"
-    description: "I find my home!"
-]
+scene = angular.module "scene", []
+
+
+StoryProvider = () ->
+        {get: (id) ->
+            story = [
+                latlng: [51.408411,-0.15022]
+                zoom: 9
+                name: "London"
+                description: "Born and raised."
+            ,
+                latlng: [52.204,0.118902]
+                zoom: 14
+                name: "Cambridge"
+                description: "The University Years"
+            ,
+                latlng: [52.234259,0.153287]
+                zoom: 15
+                name: "Detour"
+                description: "Cheeky Gap Year..."
+            ,
+                latlng: [37.735863,-122.414019]
+                zoom: 11
+                name: "SF"
+                description: "Venturing into the wild!"
+            ,
+                latlng: [37.744975,-122.419062]
+                zoom: 17
+                name: "Bernal Mission"
+                description: "I find my home!"
+            ]
+            return story
+        }
+scene.service('storyProvider', StoryProvider)
+
+
 
 displayPoint = (point) ->
     console.log point
     window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
     window.map.setZoom(point.zoom)
 
-scene = angular.module "scene", []
-scene.controller 'FlowCtrl', ['$scope', ($scope) ->
+scene.controller 'FlowCtrl', ['$scope', 'storyProvider', ($scope, storyProvider) ->
     $scope.selected = -1
     $scope.playing = false
-    $scope.story = story
+    $scope.story = storyProvider.get(0)
 
     $scope.playStory = () ->
         if $scope.selected >= story.length-1
