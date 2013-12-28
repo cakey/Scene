@@ -84,24 +84,29 @@ scene.directive 'googlemap', ->
             $("#map-canvas").height ($(window).height() + "px")
             width = (($(window).width() - info_overlay_size) + "px")
             $("#map-canvas").width width
-            google.maps.event.trigger(window.map, 'resize')
+            google.maps.event.trigger(scope.map, 'resize')
             $("#info-overlay").css("left", width)
 
         mapOptions =
-            center: scope.center
+            center: new google.maps.LatLng(scope.center[0], scope.center[1])
             zoom: scope.zoom
 
-        window.map = new google.maps.Map element[0], mapOptions
+        scope.map = new google.maps.Map element[0], mapOptions
+
+        scope.$watch 'center', (latlng) ->
+            scope.map.panTo(new google.maps.LatLng(latlng[0], latlng[1]))
+        scope.$watch 'zoom', (zoom) ->
+            scope.map.setZoom(zoom)
+
         setMapSize()
         $(window).resize setMapSize
 
 
 scene.controller 'MapCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
-    $scope.center = new google.maps.LatLng(0.724944,-0.773394)
+    $scope.center = [0.724944,-0.773394]
     $scope.zoom = 2
 
     $rootScope.$on 'displayPoint', (event, point) ->
-        window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
-        window.map.setZoom(point.zoom)
-
+        $scope.center = point.latlng
+        $scope.zoom = point.zoom
 ]
