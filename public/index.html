@@ -6,8 +6,7 @@
   <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body ng-app="scene">
-  
-  <div id="map-canvas"></div>
+  <googlemap id="map-canvas" ng-controller="MapCtrl"></googlemap>
   <div id="info-overlay" ng-controller="FlowCtrl">
     <img ng-src="img/glyphicons_{{playing|playButtonImage}}.png" ng-show="selected == -1" ng-click="playStory()" />
 	  <span id="desc">Watch the story</span>

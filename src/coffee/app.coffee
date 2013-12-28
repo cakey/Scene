@@ -40,25 +40,23 @@ displayPoint = (point) ->
     window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
     window.map.setZoom(point.zoom)
 
-scene.controller 'FlowCtrl', ['$scope', 'storyProvider', ($scope, storyProvider) ->
+scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, $rootScope, storyProvider) ->
     $scope.selected = -1
     $scope.playing = false
     $scope.story = storyProvider.get(0)
 
     $scope.playStory = () ->
-        if $scope.selected >= story.length-1
+        if $scope.selected >= $scope.story.length-1
             $scope.selected = -1
 
         $scope.playing = not $scope.playing
 
-        console.log "now playing = " + $scope.playing
-
         createTimeout = (i) ->
             setTimeout(() ->
                 $scope.selected = i
-                displayPoint story[i]
+                displayPoint $scope.story[i]
 
-                if i >= story.length-1
+                if i >= $scope.story.length-1
                     $scope.playing = false
 
                 if $scope.playing
@@ -68,41 +66,45 @@ scene.controller 'FlowCtrl', ['$scope', 'storyProvider', ($scope, storyProvider)
             , 500)
 
         if $scope.playing
+            clearTimeout $scope.current
             $scope.current = createTimeout($scope.selected + 1)
         else
             clearTimeout $scope.current
 
     $scope.displayPoint = (i) ->
-        console.log $scope.selected
+        if $scope.selected is -1 and i is $scope.story.length -1
+            return
         $scope.selected = i
         $scope.playing = false
         clearTimeout $scope.current
-        displayPoint story[i]
+        displayPoint $scope.story[i]
     ]
 
 scene.filter 'playButtonImage', ->
     (playing) ->
         if playing then "pause" else "play"
  
+scene.directive 'googlemap', ->
+    restrict: 'E'
+    link: (scope, element, attrs) ->
+        setMapSize = ->
+            info_overlay_size = 300
+            $("#map-canvas").height ($(window).height() + "px")
+            width = (($(window).width() - info_overlay_size) + "px")
+            $("#map-canvas").width width
+            google.maps.event.trigger(window.map, 'resize')
+            $("#info-overlay").css("left", width)
 
-setMapSize = () ->
-    $("#map-canvas").height ($(window).height() + "px")
-    width = (($(window).width() - 400) + "px")
-    $("#map-canvas").width width
-    google.maps.event.trigger(window.map, 'resize')
+        mapOptions =
+            center: scope.center
+            zoom: scope.zoom
 
-    $("#info-overlay").css("left", width)
-
-$(window).resize setMapSize
+        window.map = new google.maps.Map element[0], mapOptions
+        setMapSize()
+        $(window).resize setMapSize
 
 
-init = () ->
-    console.log "init" 
-    mapOptions =
-        center: new google.maps.LatLng(0.724944,-0.773394),
-        zoom: 2
-
-    window.map = new google.maps.Map(document.getElementById("map-canvas"),
-            mapOptions)
-    setMapSize()
-$(init)
+scene.controller 'MapCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
+    $scope.center = new google.maps.LatLng(0.724944,-0.773394)
+    $scope.zoom = 2
+]
