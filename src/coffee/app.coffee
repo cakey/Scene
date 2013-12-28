@@ -33,13 +33,6 @@ StoryProvider = () ->
         }
 scene.service('storyProvider', StoryProvider)
 
-
-
-displayPoint = (point) ->
-    console.log point
-    window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
-    window.map.setZoom(point.zoom)
-
 scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, $rootScope, storyProvider) ->
     $scope.selected = -1
     $scope.playing = false
@@ -54,7 +47,7 @@ scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, 
         createTimeout = (i) ->
             setTimeout(() ->
                 $scope.selected = i
-                displayPoint $scope.story[i]
+                $rootScope.$emit 'displayPoint', $scope.story[i]
 
                 if i >= $scope.story.length-1
                     $scope.playing = false
@@ -66,18 +59,17 @@ scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, 
             , 500)
 
         if $scope.playing
-            clearTimeout $scope.current
             $scope.current = createTimeout($scope.selected + 1)
         else
             clearTimeout $scope.current
 
     $scope.displayPoint = (i) ->
-        if $scope.selected is -1 and i is $scope.story.length -1
+        if $scope.selected is -1 and i is $scope.story.length-1
             return
         $scope.selected = i
         $scope.playing = false
         clearTimeout $scope.current
-        displayPoint $scope.story[i]
+        $rootScope.$emit 'displayPoint', $scope.story[i]
     ]
 
 scene.filter 'playButtonImage', ->
@@ -107,4 +99,9 @@ scene.directive 'googlemap', ->
 scene.controller 'MapCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
     $scope.center = new google.maps.LatLng(0.724944,-0.773394)
     $scope.zoom = 2
+
+    $rootScope.$on 'displayPoint', (event, point) ->
+        window.map.panTo(new google.maps.LatLng(point.latlng[0], point.latlng[1]))
+        window.map.setZoom(point.zoom)
+
 ]
