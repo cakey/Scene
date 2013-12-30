@@ -99,7 +99,13 @@ scene.directive 'googlemap', ['$window', ($window)->
         scope.map = new google.maps.Map element[0], mapOptions
 
         scope.$watch 'center', (latlng) ->
-            scope.map.panTo(makeLatLng latlng)
+            googleLatLng = makeLatLng latlng
+            scope.marker?.setMap null
+            scope.marker = new google.maps.Marker(
+                position: googleLatLng
+                map: scope.map
+            )
+            scope.map.panTo googleLatLng
 
         scope.$watch 'zoom', (zoom) ->
             scope.map.setZoom zoom
