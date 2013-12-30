@@ -76,16 +76,17 @@ scene.filter 'playButtonImage', ->
     (playing) ->
         if playing then "pause" else "play"
  
-scene.directive 'googlemap', ->
+scene.directive 'googlemap', ['$window', ($window)->
     restrict: 'E'
     link: (scope, element, attrs) ->
+        w = angular.element($window)
         setMapSize = ->
             info_overlay_size = 300
-            $("#map-canvas").height ($(window).height() + "px")
-            width = (($(window).width() - info_overlay_size) + "px")
-            $("#map-canvas").width width
+            element.height w.height()
+            width = w.width() - info_overlay_size
+            element.width width
             google.maps.event.trigger(scope.map, 'resize')
-            $("#info-overlay").css("left", width)
+            angular.element("#info-overlay").css("left", width)
 
         mapOptions =
             center: new google.maps.LatLng(scope.center[0], scope.center[1])
@@ -99,8 +100,8 @@ scene.directive 'googlemap', ->
             scope.map.setZoom(zoom)
 
         setMapSize()
-        $(window).resize setMapSize
-
+        w.resize setMapSize
+]
 
 scene.controller 'MapCtrl', ['$scope', '$rootScope', ($scope, $rootScope) ->
     $scope.center = [0.724944,-0.773394]
