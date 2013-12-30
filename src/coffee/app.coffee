@@ -80,6 +80,10 @@ scene.directive 'googlemap', ['$window', ($window)->
     restrict: 'E'
     link: (scope, element, attrs) ->
         w = angular.element($window)
+
+        makeLatLng = (location) ->
+            return new google.maps.LatLng location[0], location[1]
+
         setMapSize = ->
             info_overlay_size = 300
             element.height w.height()
@@ -89,15 +93,16 @@ scene.directive 'googlemap', ['$window', ($window)->
             angular.element("#info-overlay").css("left", width)
 
         mapOptions =
-            center: new google.maps.LatLng(scope.center[0], scope.center[1])
+            center: makeLatLng scope.center
             zoom: scope.zoom
 
         scope.map = new google.maps.Map element[0], mapOptions
 
         scope.$watch 'center', (latlng) ->
-            scope.map.panTo(new google.maps.LatLng(latlng[0], latlng[1]))
+            scope.map.panTo(makeLatLng latlng)
+
         scope.$watch 'zoom', (zoom) ->
-            scope.map.setZoom(zoom)
+            scope.map.setZoom zoom
 
         setMapSize()
         w.resize setMapSize
