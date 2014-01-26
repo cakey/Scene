@@ -2,35 +2,35 @@ scene = angular.module "scene", []
 
 
 StoryProvider = () ->
-        {get: (id) ->
-            story = [
-                latlng: [51.408411,-0.15022]
-                zoom: 9
-                name: "London"
-                description: "Born and raised."
-            ,
-                latlng: [52.204,0.118902]
-                zoom: 14
-                name: "Cambridge"
-                description: "The University Years"
-            ,
-                latlng: [52.234259,0.153287]
-                zoom: 15
-                name: "Detour"
-                description: "Cheeky Gap Year..."
-            ,
-                latlng: [37.735863,-122.414019]
-                zoom: 11
-                name: "SF"
-                description: "Venturing into the wild!"
-            ,
-                latlng: [37.744975,-122.419062]
-                zoom: 17
-                name: "Bernal Mission"
-                description: "I find my home!"
-            ]
-            return story
-        }
+    get: (id) ->
+        story = [
+            latlng: [51.408411,-0.15022]
+            zoom: 9
+            name: "London"
+            description: "Born and raised."
+        ,
+            latlng: [52.204,0.118902]
+            zoom: 14
+            name: "Cambridge"
+            description: "The University Years"
+        ,
+            latlng: [52.234259,0.153287]
+            zoom: 15
+            name: "Detour"
+            description: "Cheeky Gap Year..."
+        ,
+            latlng: [37.735863,-122.414019]
+            zoom: 11
+            name: "SF"
+            description: "Venturing into the wild!"
+        ,
+            latlng: [37.744975,-122.419062]
+            zoom: 17
+            name: "Bernal Mission"
+            description: "I find my home!"
+        ]
+        return story
+            
 scene.service('storyProvider', StoryProvider)
 
 scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, $rootScope, storyProvider) ->
