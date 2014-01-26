@@ -1,3 +1,2 @@
-public/js
-public/css
 .sass-cache
+node_modules
