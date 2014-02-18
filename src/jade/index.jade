@@ -17,9 +17,15 @@ html(lang='en')
           ng-class='{active: selected == $index}',
           ng-click='displayPoint($index);',
           ng-repeat='point in story'
-        )
-        div {{point.name}} 
-        div(ng-show='selected == $index')  {{point.description}} 
+        ) {{point.name}} 
+      #description(ng-show='selected !== -1')
+        | {{story[selected].name}} 
+        br
+        | {{story[selected].datetime}}
+        br
+        | {{story[selected].description}} 
+      #title
+        | {{title}}
 
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA6JBkMIUrJt45TPCMbdgkITL3JTCbywks&sensor=false')
     script(src='http://code.jquery.com/jquery-1.10.1.min.js')

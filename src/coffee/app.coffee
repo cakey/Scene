@@ -3,32 +3,39 @@ scene = angular.module "scene", []
 
 StoryProvider = () ->
     get: (id) ->
-        story = [
-            latlng: [51.408411,-0.15022]
-            zoom: 9
-            name: "London"
-            description: "Born and raised."
-        ,
-            latlng: [52.204,0.118902]
-            zoom: 14
-            name: "Cambridge"
-            description: "The University Years"
-        ,
-            latlng: [52.234259,0.153287]
-            zoom: 15
-            name: "Detour"
-            description: "Cheeky Gap Year..."
-        ,
-            latlng: [37.735863,-122.414019]
-            zoom: 11
-            name: "SF"
-            description: "Venturing into the wild!"
-        ,
-            latlng: [37.744975,-122.419062]
-            zoom: 17
-            name: "Bernal Mission"
-            description: "I find my home!"
-        ]
+        story =
+            title: "Ben's lifestory..."
+            points: [
+                latlng: [51.408411,-0.15022]
+                zoom: 9
+                name: "London"
+                description: "Born and raised."
+                datetime: "1990-2009"
+            ,
+                latlng: [52.204,0.118902]
+                zoom: 14
+                name: "Cambridge"
+                description: "The University Years"
+                datetime: "2009-2013"
+            ,
+                latlng: [52.234259,0.153287]
+                zoom: 15
+                name: "Detour"
+                description: "Cheeky Gap Year..."
+                datetime: "2012"
+            ,
+                latlng: [37.735863,-122.414019]
+                zoom: 11
+                name: "SF"
+                description: "Venturing into the wild!"
+                datetime: "Sep 2013"
+            ,
+                latlng: [37.744975,-122.419062]
+                zoom: 17
+                name: "Bernal Mission"
+                description: "I find my home!"
+                datetime: "Nov 2013"
+            ]
         return story
             
 scene.service('storyProvider', StoryProvider)
@@ -36,7 +43,8 @@ scene.service('storyProvider', StoryProvider)
 scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, $rootScope, storyProvider) ->
     $scope.selected = -1
     $scope.playing = false
-    $scope.story = storyProvider.get(0)
+    $scope.story = storyProvider.get(0).points
+    $scope.title = storyProvider.get(0).title
     $scope.timeout = 1000
 
     $scope.playStory = () ->

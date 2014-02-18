@@ -19,8 +19,9 @@ body {
   width: 200px;
   right: 25px;
 
+
   .point {
-    padding: 5px;
+    padding: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
     text-align: center;
@@ -28,12 +29,13 @@ body {
     margin-right: 10px;
   }
   .active {
+    line-height: 40px;
     margin-right: 0px;
 
-    line-height: 40px;
     border-right: solid 5px $slider-color;
     margin-top: 10px;
     margin-bottom: 10px;
+    box-shadow: 0px 0px 41px #888888;
   }
   #slider {
     position: fixed;
@@ -48,5 +50,25 @@ body {
     position: fixed;
     bottom: 25px;
     right: 25px;
+  }
+  #description {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    left: 50px;
+    top: 50px;
+    position: fixed;
+    box-shadow: 0px 0px 41px #888888;
+    text-align: center;
+  }
+  #title {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    left: 50px;
+    bottom: 50px;
+    position: fixed;
+    box-shadow: 0px 0px 41px #888888;
+    text-align: center;
   }
 }
