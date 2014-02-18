@@ -1,5 +1,7 @@
 $font-stack: "Century Gothic", sans-serif;
 
+$slider-color: rgb(150, 150, 250);
+
 body {
   margin: 0px;
   padding: 0px;
@@ -11,21 +13,40 @@ body {
 }
 
 #info-overlay {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 50px;
   height: 100%;
-  width: 300px; /* update in coffee */
+  width: 200px;
+  right: 25px;
+
   .point {
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    text-align: right;
+    text-align: center;
+    background: white;
+    margin-right: 10px;
   }
   .active {
-    background: rgba(240, 210, 240, 0.3);
+    margin-right: 0px;
+
     line-height: 40px;
-    border-right: solid 5px rgba(200, 150, 200, 0.6);
+    border-right: solid 5px $slider-color;
     margin-top: 10px;
     margin-bottom: 10px;
+  }
+  #slider {
+    position: fixed;
+    top: 50px;
+    height: 90%;
+    height: calc(100% - 150px);
+    width: 5px;
+    right: 10px;
+    background: $slider-color;
+  }
+  #control {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
   }
 }

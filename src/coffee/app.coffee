@@ -37,6 +37,7 @@ scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, 
     $scope.selected = -1
     $scope.playing = false
     $scope.story = storyProvider.get(0)
+    $scope.timeout = 1000
 
     $scope.playStory = () ->
         if $scope.selected >= $scope.story.length-1
@@ -56,7 +57,7 @@ scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, 
                     $scope.current = createTimeout($scope.selected + 1)
 
                 $scope.$apply()
-            , 500)
+            , $scope.timeout)
 
         if $scope.playing
             $scope.current = createTimeout($scope.selected + 1)
@@ -87,14 +88,15 @@ scene.directive 'googlemap', ['$window', ($window)->
         setMapSize = ->
             info_overlay_size = 300
             element.height w.height()
-            width = w.width() - info_overlay_size
-            element.width width
+            element.width w.width()
             google.maps.event.trigger(scope.map, 'resize')
-            angular.element("#info-overlay").css("left", width)
 
         mapOptions =
             center: makeLatLng scope.center
             zoom: scope.zoom
+            disableDefaultUI: true
+            zoomControl: false
+            panControl: false
 
         scope.map = new google.maps.Map element[0], mapOptions
 
