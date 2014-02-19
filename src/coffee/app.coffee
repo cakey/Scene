@@ -51,6 +51,7 @@ scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, 
 
     $scope.next = -> displayPoint $scope.selected + 1
     $scope.back = -> displayPoint $scope.selected - 1
+    $scope.reset = -> displayPoint 0
 
     $scope.displayPoint = displayPoint
 

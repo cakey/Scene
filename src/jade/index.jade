@@ -26,10 +26,15 @@ html(lang='en')
           ng-src='img/glyphicons_224_chevron-left.png',
           ng-click='back()'
       )
-      img#next(
+      img.next(
           ng-show='selected < (story.length - 1)'
           ng-src='img/glyphicons_223_chevron-right.png',
           ng-click='next()'
+      )
+      img.next(
+          ng-show='selected === (story.length - 1)'
+          ng-src='img/glyphicons_repeat.png',
+          ng-click='reset()'
       )
 
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA6JBkMIUrJt45TPCMbdgkITL3JTCbywks&sensor=false')
