@@ -2,6 +2,12 @@ $font-stack: "Century Gothic", sans-serif;
 
 $slider-color: rgb(150, 150, 250);
 
+@mixin overlay {
+  background: white;
+  text-align: center;
+
+}
+
 body {
   margin: 0px;
   padding: 0px;
@@ -21,20 +27,20 @@ body {
 
 
   .point {
+    @include overlay;
     padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    text-align: center;
-    background: white;
+    margin-bottom: 10px;
     margin-right: 10px;
+    &:hover {
+      border-right: solid 5px $slider-color;
+      background: rgb(230, 230, 230)      
+    }
   }
   .active {
     line-height: 40px;
     margin-right: 0px;
 
     border-right: solid 5px $slider-color;
-    margin-top: 10px;
-    margin-bottom: 10px;
     box-shadow: 0px 0px 41px #888888;
   }
   #slider {
@@ -52,23 +58,46 @@ body {
     right: 25px;
   }
   #description {
+    @include overlay;
     width: 300px;
     padding: 20px;
-    background: white;
     left: 50px;
     top: 50px;
     position: fixed;
     box-shadow: 0px 0px 41px #888888;
-    text-align: center;
   }
   #title {
+    @include overlay;
     width: 300px;
-    padding: 20px;
-    background: white;
+    padding: 10px;
     left: 50px;
     bottom: 50px;
     position: fixed;
     box-shadow: 0px 0px 41px #888888;
-    text-align: center;
   }
+
+  #next {
+    @include overlay;
+    width: 15px;
+    height: 20px;
+    padding: 10px;
+    right: 80px;
+    bottom: 50px;
+    position: fixed;
+    box-shadow: 0px 0px 41px #888888;
+  }
+
+  #back {
+    @include overlay;
+    width: 15px;
+    height: 20px;
+    padding: 10px;
+    right: 150px;
+    bottom: 50px;
+    position: fixed;
+    box-shadow: 0px 0px 41px #888888;
+    text-align: right;
+  }
+
+
 }

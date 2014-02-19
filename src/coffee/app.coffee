@@ -42,48 +42,19 @@ scene.service('storyProvider', StoryProvider)
 
 scene.controller 'FlowCtrl', ['$scope', '$rootScope', 'storyProvider', ($scope, $rootScope, storyProvider) ->
     $scope.selected = -1
-    $scope.playing = false
     $scope.story = storyProvider.get(0).points
     $scope.title = storyProvider.get(0).title
-    $scope.timeout = 1000
 
-    $scope.playStory = () ->
-        if $scope.selected >= $scope.story.length-1
-            $scope.selected = -1
-
-        $scope.playing = not $scope.playing
-
-        createTimeout = (i) ->
-            setTimeout(() ->
-                $scope.selected = i
-                $rootScope.$emit 'displayPoint', $scope.story[i]
-
-                if i >= $scope.story.length-1
-                    $scope.playing = false
-
-                if $scope.playing
-                    $scope.current = createTimeout($scope.selected + 1)
-
-                $scope.$apply()
-            , $scope.timeout)
-
-        if $scope.playing
-            $scope.current = createTimeout($scope.selected + 1)
-        else
-            clearTimeout $scope.current
-
-    $scope.displayPoint = (i) ->
-        if $scope.selected is -1 and i is $scope.story.length-1
-            return
+    displayPoint = (i) ->
         $scope.selected = i
-        $scope.playing = false
-        clearTimeout $scope.current
-        $rootScope.$emit 'displayPoint', $scope.story[i]
-    ]
+        $rootScope.$emit 'displayPoint', $scope.story[$scope.selected]
 
-scene.filter 'playButtonImage', ->
-    (playing) ->
-        if playing then "pause" else "play"
+    $scope.next = -> displayPoint $scope.selected + 1
+    $scope.back = -> displayPoint $scope.selected - 1
+
+    $scope.displayPoint = displayPoint
+
+    ]
  
 scene.directive 'googlemap', ['$window', ($window)->
     restrict: 'E'

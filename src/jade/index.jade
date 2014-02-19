@@ -7,12 +7,7 @@ html(lang='en')
   body(ng-app='scene')
     googlemap#map-canvas(ng-controller='MapCtrl')
     #info-overlay(ng-controller='FlowCtrl')
-      #slider
-      #control
-        img(
-            ng-src='img/glyphicons_{{playing|playButtonImage}}.png',
-            ng-click='playStory()'
-        )
+      //#slider
       .point(
           ng-class='{active: selected == $index}',
           ng-click='displayPoint($index);',
@@ -26,6 +21,16 @@ html(lang='en')
         | {{story[selected].description}} 
       #title
         | {{title}}
+      img#back(
+          ng-show='selected > 0'
+          ng-src='img/glyphicons_224_chevron-left.png',
+          ng-click='back()'
+      )
+      img#next(
+          ng-show='selected < (story.length - 1)'
+          ng-src='img/glyphicons_223_chevron-right.png',
+          ng-click='next()'
+      )
 
     script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyA6JBkMIUrJt45TPCMbdgkITL3JTCbywks&sensor=false')
     script(src='http://code.jquery.com/jquery-1.10.1.min.js')
